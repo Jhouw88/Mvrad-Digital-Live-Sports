@@ -1,0 +1,35 @@
+[
+  {
+    "id": "cbc-sport",
+    "name": "CBC Sport",
+    "category": "football",
+    "description": "Official free sports coverage and live clips.",
+    "country": "AZ",
+    "language": "az",
+    "url": "https://example.com/cbc-sport.m3u8",
+    "externalUrl": true,
+    "enabled": true
+  },
+  {
+    "id": "sports-tv",
+    "name": "Sports TV",
+    "category": "football",
+    "description": "Live sports streams and highlights.",
+    "country": "AZ",
+    "language": "az",
+    "url": "https://example.com/sports-tv.m3u8",
+    "externalUrl": true,
+    "enabled": true
+  },
+  {
+    "id": "fifa-plus",
+    "name": "FIFA+",
+    "category": "football",
+    "description": "Official football content and match coverage.",
+    "country": "INT",
+    "language": "en",
+    "url": "https://example.com/fifa-plus.m3u8",
+    "externalUrl": true,
+    "enabled": true
+  }
+]

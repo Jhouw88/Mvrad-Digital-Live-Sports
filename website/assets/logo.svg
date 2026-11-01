@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Mvrad Digital logo">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#08111b"/>
+  <circle cx="64" cy="64" r="46" fill="url(#g)" opacity="0.18"/>
+  <path d="M38 86V42h12l12 20 12-20h12v44H74V62L62 82H52L40 62v24H38zm52 0V42h12v44H90z" fill="url(#g)"/>
+</svg>

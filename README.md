@@ -4,12 +4,12 @@
 
 # Mvrad Digital Live Sports
 
-**Stremio addon** — rəsmi olaraq pulsuz yayımlanan canlı idmanı bir yerə toplayır.
-Azərbaycan dilində interfeys.
+**Stremio addon** — brings together officially free live sports streams in one place.
+The interface is in English.
 
-[![Quraşdır](https://img.shields.io/badge/⬇_STREMIO--DA_QURAŞDIR-A8E832?style=for-the-badge&logoColor=041209&labelColor=041209)](https://YOUR-ADDON-DOMAIN/)
+[![Install](https://img.shields.io/badge/⬇_STREMIO--ADDON_INSTALL-A8E832?style=for-the-badge&logoColor=041209&labelColor=041209)](https://YOUR-ADDON-DOMAIN/)
 &nbsp;
-[![Sayt](https://img.shields.io/badge/Sayt-22D3EE?style=for-the-badge&labelColor=041209)](https://YOUR-ADDON-DOMAIN/)
+[![Website](https://img.shields.io/badge/Website-22D3EE?style=for-the-badge&labelColor=041209)](https://YOUR-ADDON-DOMAIN/)
 
 ![Node](https://img.shields.io/badge/Node-18%2B-3B82F6?style=flat-square&labelColor=0A1120)
 ![Stremio](https://img.shields.io/badge/Stremio-Addon_SDK-7C3AED?style=flat-square&labelColor=0A1120)
@@ -19,47 +19,43 @@ Azərbaycan dilində interfeys.
 
 ---
 
-## Nədir bu?
+## What is this?
 
-Stremio üçün idman addon-u. Hüquq sahibinin **özünün pulsuz yaydığı** rəsmi
-mənbələri Stremio-nun `Discover` bölməsində bir kataloqda toplayır — CBC Sport,
-İdman TV, FIFA+, UEFA.tv, Red Bull TV.
+A sports addon for Stremio. It collects official sources published freely by the rights holder into a single catalog in Stremio's `Discover` section — CBC Sport, Sports TV, FIFA+, UEFA.tv, Red Bull TV.
 
-İnterfeys və kataloq adları Azərbaycan dilindədir. Sayt AZ / EN / RU dəstəkləyir.
+The interface and catalog names are in English. The site supports AZ / EN / RU.
 
-> **Qanunilik.** Bu addon heç bir yayımı saxlamır, kodlaşdırmır və yenidən
-> yayımlamır. Ödənişli və ya eksklüziv hüquqla qorunan yayımlar (Çempionlar
-> Liqası, La Liga, UFC, Formula 1 və s.) **daxil deyil və əlavə olunmayacaq.**
+> **Legal note.** This addon does not store, encode, or redistribute any streams. Paid or exclusive protected broadcasts (Champions League, La Liga, UFC, Formula 1, etc.) are **not included and will not be added.**
 
 ---
 
-## Quruluş
+## Structure
 
 ```
 .
 ├── addon/                  Node.js Stremio addon
-│   ├── server.js           catalog / meta / stream handler-ləri
+│   ├── server.js           catalog / meta / stream handlers
 │   └── src/
-│       ├── manifest.js     kataloq adları və kateqoriyalar
-│       ├── sources.json    ← icazən olan mənbələri bura yaz
-│       └── providers/      modul provayderlər
-│           ├── index.js    registr + keş
-│           ├── manual.js   sources.json oxuyur
-│           └── redbull.js  canlı API nümunəsi
+│       ├── manifest.js     catalog names and categories
+│       ├── sources.json    ← add permitted sources here
+│       └── providers/      modular providers
+│           ├── index.js    registry + cache
+│           ├── manual.js   reads sources.json
+│           └── redbull.js  example live API
 │
-└── website/                statik sayt (Cloudflare Pages)
+└── website/                static site (Cloudflare Pages)
     ├── index.html
     ├── styles.css
-    ├── i18n.js             AZ / EN / RU tərcümələr
-    ├── app.js              ← ADDON_DOMAIN-i burada dəyiş
+    ├── i18n.js             AZ / EN / RU translations
+    ├── app.js              ← change ADDON_DOMAIN here
     └── assets/logo.svg
 ```
 
 ---
 
-## Addon-u işə sal
+## Run the addon
 
-Node.js 18+ lazımdır.
+Node.js 18+ is required.
 
 ```bash
 cd addon
@@ -70,21 +66,21 @@ npm start
 
 Manifest: `http://127.0.0.1:7000/manifest.json`
 
-Yerli olaraq sınamaq üçün Stremio-da bu linki əlavə et:
+To test locally in Stremio, add this link:
 `stremio://127.0.0.1:7000/manifest.json`
 
 ---
 
-## Mənbə əlavə et
+## Add a source
 
-`addon/src/sources.json` faylını aç, siyahıya yeni sətir əlavə et:
+Open the file `addon/src/sources.json` and add a new entry to the list:
 
 ```json
 {
-  "id": "kanal-adi",
-  "name": "Kanal adı",
-  "category": "futbol",
-  "description": "Qısa təsvir",
+  "id": "channel-name",
+  "name": "Channel name",
+  "category": "football",
+  "description": "Short description",
   "country": "AZ",
   "language": "az",
   "url": "https://.../stream.m3u8",
@@ -93,50 +89,48 @@ Yerli olaraq sınamaq üçün Stremio-da bu linki əlavə et:
 }
 ```
 
-`category` bunlardan biri olmalıdır:
-`futbol` · `basketbol` · `motorsport` · `doyus` · `ekstremal` · `arxiv`
+`category` must be one of:
+`football` · `basketball` · `motorsport` · `wrestling` · `extreme` · `archive`
 
-`externalUrl: true` qoysan, Stremio linki brauzerdə açır (birbaşa oxutmur) —
-rəsmi saytlara yönləndirmək üçün ən təhlükəsiz variant.
+If you set `externalUrl: true`, Stremio opens the link in the browser instead of loading it directly — this is the safest option for official websites.
 
-**Yalnız yaymağa icazən olan mənbələri əlavə et.**
+**Only add sources you are authorized to publish.**
 
 ---
 
-## Saytı konfiqurasiya et
+## Configure the website
 
-`website/app.js` faylının başındakı sətri dəyiş:
+Change the first line in `website/app.js`:
 
 ```js
-const ADDON_DOMAIN = "sports.mvraddigital.com";   // protokolsuz, / olmadan
+const ADDON_DOMAIN = "sports.mvraddigital.com";   // no protocol, no trailing slash
 ```
 
-Quraşdırma düyməsi avtomatik bu linkə çevriləcək:
+The install button will automatically generate this link:
 `stremio://sports.mvraddigital.com/manifest.json`
 
-Stremio quraşdırılmayıbsa, düymə `web.stremio.com`-a keçir.
+If Stremio is not installed, the button redirects to `web.stremio.com`.
 
-Bu README-dəki iki badge linkini də öz domeninlə əvəz et
-(`YOUR-ADDON-DOMAIN` yazılan yerlər).
+Also replace the two badge links in this README with your own domain (`YOUR-ADDON-DOMAIN`).
 
 ---
 
-## Yayımlama
+## Deployment
 
-| Hissə | Harada |
+| Section | Where |
 |---|---|
-| `website/` | Cloudflare Pages — build command yoxdur, output directory: `website` |
-| `addon/` | Node işlədən hosting (Railway, Render, Fly.io, VPS) |
+| `website/` | Cloudflare Pages — no build command, output directory: `website` |
+| `addon/` | Node hosting (Railway, Render, Fly.io, VPS) |
 
-Addon domenini Cloudflare-in arxasına qoymaq tövsiyə olunur.
+It is recommended to place the addon domain behind Cloudflare.
 
-Cloudflare Pages üçün: repo-nu bağla, **Framework preset: None**,
+For Cloudflare Pages: connect the repo, **Framework preset: None**,
 **Build output directory: `website`**.
 
 ---
 
-## Lisenziya
+## License
 
-MIT — bax [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).
 
-Bütün marka adları və yayım hüquqları öz sahiblərinə aiddir.
+All brand names and broadcasting rights belong to their respective owners.
